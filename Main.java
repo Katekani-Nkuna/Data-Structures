@@ -8,27 +8,23 @@ public class Main {
         tree.insert(15);
 
         /* Test inserting on a non-empty tree */
-        tree.insert(4);
+        tree.insert(10);
 
-        tree.insert(3);
+        tree.insert(30);
         /* Test inserting on a non-empty tree */
-        tree.insert(17);
+        tree.insert(5);
 
+        tree.insert(11);
         tree.insert(20);
+        tree.insert(40);
+        tree.insert(12);
 
 
-       //tree.insert(1);
-        tree.inorder(tree.root);
-        tree.delete(17);
-        System.out.println("");
         tree.inorder(tree.root);
 
-        tree.delete(17);
+        tree.delete(15);
         System.out.println("");
-        tree.inorder(tree.root);
 
-        tree.delete(17);
-        System.out.println("");
         tree.inorder(tree.root);
     }
 }

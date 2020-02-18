@@ -80,13 +80,11 @@ public class BinaryTree {
 
         /*Search for tree to delete */
         Node prev = null;
-        Node parent = null;
         Node current = root;
 
         /* Search for the node to delete */
         while( current != null && current.value != data) {
 
-            parent = prev;
             prev = current;
 
             if(data < current.value)
@@ -133,8 +131,84 @@ public class BinaryTree {
         /* Case3: Node has both children */
         else{
             /*Delete by merge or copying*/
+            //deleteByMerge(prev, current);
+            deleteByCopy ( prev, current);
         }
 
+    }
+
+    /* Function to delete by merging left and right subtrees of deleted node*/
+   private void deleteByMerge( Node parent, Node node) {
+
+        Node current = node.left;
+
+        /* First find the rightmost node of the left subtree */
+        while ( current.right != null ) {
+            current = current.right;
+        }
+
+        /* Set left subtree Max node to node's right subtree*/
+        current.right = node.right;
+
+        /* left subtree should now sit in place of the node */
+
+        /* If the node is the root node, then left subtree root, becomes tree root */
+        if( parent == null ) {
+            root = node.left;
+        }
+        else if( parent.left == node)
+            parent.left = current;
+        else
+            parent.right = current;
+
+        node.right = null;
+    }
+
+    /* Function to delete by merging left and right subtrees of deleted node*/
+    private void deleteByCopy ( Node parent, Node node ) {
+
+        Node current = node.left;
+        Node prev = null;
+
+        /* First find the rightmost node of the left subtree */
+        while ( current.right != null ) {
+            prev = current;
+            current = current.right;
+        }
+
+        /* Copy the predecessor to new node*/
+        node.value = current.value;
+
+        if( current.left == null && current.right == null) {
+
+            /* Case 1: Node is a leaf node */
+            if( current.left == null && current.right == null ) {
+                System.out.println("The node is a leaf node");
+                /* Check which child of parent it is*/
+                if( prev.left == current)
+                    prev.left = null;
+                else
+                    prev.right = null;
+
+            }
+            /* Case 2a: Node has only 1 child ( right child ) */
+            else if ( current.left == null && current.right != null) {
+                /* Check which child of the parent the node is */
+                if( current == prev.left) //if it is the right child
+                    prev.left = current.right;
+                else
+                    prev.right = current.right;
+            }
+            /* Case2b: Node has only 1 child (right child ) */
+            else if ( current.left != null && current.right == null ) {
+
+                /* Check which child of the parent the node is */
+                if (current == prev.left) //if it is the right child
+                    prev.left = current.left;
+                else
+                    prev.right = current.left;
+            }
+        }
     }
 }
 
